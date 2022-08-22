@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "rs-serverless",
+  "version": "0.0.1",
+  "generators": {
+    "rs-serverless": {
+      "factory": "./src/generators/rs-serverless/generator",
+      "schema": "./src/generators/rs-serverless/schema.json",
+      "description": "rs-serverless generator"
+    }
+  }
+}

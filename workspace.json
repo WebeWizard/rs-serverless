@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+  "version": 2,
+  "projects": {
+    "rs-serverless": "packages/rs-serverless",
+    "rs-serverless-e2e": "e2e/rs-serverless-e2e"
+  }
+}

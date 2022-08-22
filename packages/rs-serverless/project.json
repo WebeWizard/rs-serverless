@@ -1,0 +1,60 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/rs-serverless/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/rs-serverless",
+        "main": "packages/rs-serverless/src/index.ts",
+        "tsConfig": "packages/rs-serverless/tsconfig.lib.json",
+        "assets": [
+          "packages/rs-serverless/*.md",
+          {
+            "input": "./packages/rs-serverless/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/rs-serverless/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/rs-serverless",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./packages/rs-serverless",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/rs-serverless/**/*.ts",
+          "packages/rs-serverless/generators.json",
+          "packages/rs-serverless/executors.json",
+          "packages/rs-serverless/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/rs-serverless"],
+      "options": {
+        "jestConfig": "packages/rs-serverless/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
