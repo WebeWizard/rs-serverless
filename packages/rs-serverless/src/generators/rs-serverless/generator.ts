@@ -1,4 +1,5 @@
 import {
+  addDependenciesToPackageJson,
   addProjectConfiguration,
   formatFiles,
   generateFiles,
@@ -26,7 +27,7 @@ function normalizeOptions(
     ? `${names(options.directory).fileName}/${name}`
     : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
+  const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const parsedTags = options.tags
     ? options.tags.split(',').map((s) => s.trim())
     : [];
@@ -62,7 +63,7 @@ export default async function (
   const normalizedOptions = normalizeOptions(tree, options);
   addProjectConfiguration(tree, normalizedOptions.projectName, {
     root: normalizedOptions.projectRoot,
-    projectType: 'library',
+    projectType: 'application',
     sourceRoot: `${normalizedOptions.projectRoot}/src`,
     targets: {
       build: {
@@ -71,6 +72,23 @@ export default async function (
     },
     tags: normalizedOptions.parsedTags,
   });
+
+  // add dependencies
+  console.log(tree);
+  addDependenciesToPackageJson(
+    tree,
+    {
+      // deps
+    },
+    {
+      // dev deps
+      serverless: '3.22.0',
+      'serverless-plugin-typescript': '2.1.2',
+      'serverless-offline': '9.2.6',
+    }
+  );
+
+  // add files
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }
